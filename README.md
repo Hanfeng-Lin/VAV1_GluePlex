@@ -20,7 +20,6 @@ This repository contains a set of scripts to automate the Boltz prediction and p
     -   Generates `atom.csv` with aligned coordinates and scores.
     -   Runs UMAP visualization.
 -   `umap_coord_energy.py`: Script to perform UMAP dimensionality reduction on the extracted coordinates and visualize the results.
--   `CRBN_vav1_template1.yaml`: Example YAML configuration file for Boltz.
 -   `cluster*_1.pdb.cif`: Input CIF files for the batch prediction.
 
 ## Installation
