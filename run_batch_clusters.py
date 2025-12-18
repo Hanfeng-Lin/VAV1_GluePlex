@@ -4,8 +4,9 @@ import subprocess
 import sys
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
-
-# --- Configuration ---
+# ---------------------------------------------------------------
+# ------------------------ Configuration ------------------------
+# ---------------------------------------------------------------
 CIF_FILES = [
     "cluster1_1.pdb.cif",
     "cluster2_1.pdb.cif",
@@ -19,11 +20,13 @@ CIF_FILES = [
 GPUS = [0, 1, 2, 6, 7] 
 
 DIFFUSION_SAMPLES = 20
-
+PROTEIN_A_NAME = "CRBN"
 PROTEIN_A_SEQUENCE = "IINFDTSLPTSHTYLGADMEEFHGRTLHDDDSCQVIPVLPQVMMILIPGQTLPLQLFHPQEVSMVRNLIQKDRTFAVLAYSNVQEREAQFGTTAEIYAYREEQDFGIEIVKVKAIGRQRFKVLELRTQSDGIQQAKVQILPECVLPSTMSAVQLESLNKCQIFPSKPVSREDQCSYKWWQKYQKRKFHCANLTSWPRWLYSLYDAETLMDRIKKQLREWDENLKDDSLPSNPIDFSYRVAACLPIDDVLRIQLLKIGSAIQRLRCELDIMNKCTSLCCKQCQETEITTKNEIFSLSLCGPMAAYVNPHGYVHETLTVYKACNLNLIGRPSTEHSWFPGYAWTVAQCKICASHIGWKFTATKKDMSPQKFWGLTRSALLPTIPDTEDEISPDKVILCL"
+PROTEIN_B_NAME = "VAV1"
 PROTEIN_B_SEQUENCE = "KYFGTAKARYDFCARDRSELSLKEGDIIKILNKKGQQGWWRGEIYGRVGWFPANYVEEDYS"
 LIGAND_SMILES = "O=C1CCC(c2cccc(-c3ccc4[nH]ccc4c3)c2)C(=O)N1"
-# ---------------------
+# ---------------------------------------------------------------
+# ---------------------------------------------------------------
 
 # Template for the run script
 SCRIPT_TEMPLATE = """import os
@@ -35,11 +38,11 @@ YAML_CONTENT = \"\"\"
 version: 1  # Optional, defaults to 1
 sequences:
   - protein:
-      id: A
+      id: A  # {protein_a_name}
       sequence: {protein_a_seq}
       msa: empty
   - protein:
-      id: B
+      id: B  # {protein_b_name}
       sequence: {protein_b_seq}
       msa: empty
   - ligand:
@@ -116,15 +119,17 @@ def process_cif(cif_file, gpu_id):
         cluster_num = "X"
 
     script_name = f"run_boltz2_{cluster_name}.py"
-    yaml_filename = f"CRBN_vav1_template{cluster_num}.yaml"
-    out_dir = "./CRBN_VAV1_template_noMSA_20runs" # Using same output dir as requested
+    yaml_filename = f"{PROTEIN_A_NAME}_{PROTEIN_B_NAME}_template{cluster_num}.yaml"
+    out_dir = f"./{PROTEIN_A_NAME}_{PROTEIN_B_NAME}_template_noMSA_20runs" # Using same output dir as requested
 
     script_content = SCRIPT_TEMPLATE.format(
         cif_path=f"./{cif_path.name}",
         yaml_filename=yaml_filename,
         out_dir=out_dir,
         gpu_id=gpu_id,
+        protein_a_name=PROTEIN_A_NAME,
         protein_a_seq=PROTEIN_A_SEQUENCE,
+        protein_b_name=PROTEIN_B_NAME,
         protein_b_seq=PROTEIN_B_SEQUENCE,
         ligand_smiles=LIGAND_SMILES,
         diffusion_samples=DIFFUSION_SAMPLES
