@@ -1,4 +1,5 @@
-# Boltz Docking Workflow
+# VAV1_GluePlex
+Code for GluePlex analysis in the publication "Beyond the G-Loop: VAV1 Degradation Unveils an RT-Loop Degron for CRBN Molecular Glues"
 
 This repository contains a set of scripts to automate the Boltz prediction and post-analysis workflow for protein-ligand docking.
 
@@ -27,8 +28,8 @@ This repository contains a set of scripts to automate the Boltz prediction and p
 To set up the environment for this workflow, run the following commands:
 
 ```bash
-conda create -n boltz_docking python=3.10
-conda activate boltz_docking
+conda create -n boltz_analysis python=3.12
+conda activate boltz_analysis
 pip install "boltz[cuda]" -U
 pip install umap-learn
 ```
