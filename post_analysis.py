@@ -16,12 +16,13 @@ def setup_results_dir(source_dir, results_dir):
     
     print(f"Collecting files from {source_dir} to {results_dir}...")
     
-    # Copy PDBs
-    for pdb_file in glob.glob(os.path.join(source_dir, "*.pdb")):
+    # Copy PDBs recursively
+    # Pattern: source_dir/**/predictions/**/*.pdb
+    for pdb_file in glob.glob(os.path.join(source_dir, "**", "*.pdb"), recursive=True):
         shutil.copy(pdb_file, results_dir)
         
-    # Copy JSONs
-    for json_file in glob.glob(os.path.join(source_dir, "*.json")):
+    # Copy JSONs recursively
+    for json_file in glob.glob(os.path.join(source_dir, "**", "*.json"), recursive=True):
         shutil.copy(json_file, results_dir)
 
 def get_ca_coords(structure, chain_id):
@@ -129,7 +130,7 @@ def align_and_extract(results_dir, output_csv):
 def main():
     # Paths
     base_dir = os.getcwd()
-    combined_dir = os.path.join(base_dir, "..", "CRBN_VAV1_template_noMSA_20runs", "combined")
+    combined_dir = os.path.join(base_dir, "CRBN_VAV1_template_noMSA_20runs")
     results_dir = os.path.join(base_dir, "results")
     output_csv = "atom.csv"
     

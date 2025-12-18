@@ -32,6 +32,7 @@ conda create -n boltz_analysis python=3.12
 conda activate boltz_analysis
 pip install "boltz[cuda]" -U
 pip install umap-learn
+pip install umap-learn[plot]
 ```
 
 ## Usage
