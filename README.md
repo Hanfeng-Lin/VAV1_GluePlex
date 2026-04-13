@@ -1,5 +1,5 @@
 # VAV1_GluePlex
-Code for GluePlex analysis in the publication "Beyond the G-Loop: VAV1 Degradation Unveils an RT-Loop Degron for CRBN Molecular Glues"
+Code for GluePlex analysis in the publication **Leveraging High-Throughput Proteomics and AI-Based Protein Folding to Accelerate VAV1 Molecular Glue Discovery**
 
 This repository contains a set of scripts to automate the Boltz prediction and post-analysis workflow for protein-ligand docking.
 
